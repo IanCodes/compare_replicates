@@ -14,11 +14,14 @@ command -v multiBamSummary >/dev/null 2>&1 || { echo >&2 "I require multiBamSumm
 #### Read in a file of input file names
 # contents of BAM_files.txt to be used with '--bamfiles' flag
 # preferably short_descriptive names
-# cat BAM_files.txt
+# cat BAM_files.txt separate by spaces
+# https://www.linuxquestions.org/questions/linux-newbie-8/want-to-list-output-in-single-line-space-separated-860016/
+
 cat BAM_files.txt | tr '\n' ' '
 
 #### Read in a file of input file labels
 # short descriptive name of sample to be used with '--labels' flag
+
 cat BAM_labels.txt | tr '\n' ' '
 
 # cat ids.txt | parallel echo cutadapt -l 20 {}_1.fastq -o {}_1.trimmed.fq
