@@ -38,8 +38,24 @@ echo $infiles
 inlabels=$(cat $labels | tr '\n' ' ')
 echo $inlabels
 
-# cat ids.txt | parallel echo cutadapt -l 20 {}_1.fastq -o {}_1.trimmed.fq
-
 
 #### Run multiBamSummary
-echo multiBamSummary bins --bamfiles $infiles --labels $inlabels --extendReads --ignoreDuplicates --samFlagInclude 2 --maxFragmentLength 500 -o ${name}_summary.npz
+echo --- Running multiBamSummary ---
+echo multiBamSummary bins --numberOfProcessors 8 --bamfiles $infiles --labels $inlabels --extendReads --ignoreDuplicates --samFlagInclude 2 --maxFragmentLength 500 -o ${name}_summary.npz
+
+$(multiBamSummary bins --bamfiles $infiles --labels $inlabels --extendReads --ignoreDuplicates --samFlagInclude 2 --maxFragmentLength 500 -o ${name}_summary.npz) 
+
+echo --- Drawing correlation plot ---
+echo plotCorrelation -in ${name}_summary.npz --corMethod spearman --skipZeros --plotTitle "Spearman Correlation of Read Counts" --whatToPlot heatmap --colorMap RdYlBu --plotNumbers -o ${name}_heatmap_SpearmanCorr_readCounts.png --outFileCorMatrix ${name}_SpearmanCorr_readCounts.tab
+
+$(plotCorrelation -in ${name}_summary.npz --corMethod spearman --skipZeros --plotTitle "Spearman Correlation of Read Counts" --whatToPlot heatmap --colorMap RdYlBu --plotNumbers -o ${name}_heatmap_SpearmanCorr_readCounts.png --outFileCorMatrix ${name}_SpearmanCorr_readCounts.tab)
+
+echo --- Drawing PCA plot ---
+echo plotPCA --corData ${name}_summary.npz --plotTitle "PCA of Read Counts" -o ${name}_PCA_readCounts.png --outFileNameData ${name}_PCA_readCounts.tab
+
+$(plotPCA --corData ${name}_summary.npz --plotTitle "PCA of Read Counts" -o ${name}_PCA_readCounts.png --outFileNameData ${name}_PCA_readCounts.tab)
+
+echo "Finished!"
+
+
+
