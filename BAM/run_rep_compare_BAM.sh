@@ -19,11 +19,12 @@ command -v multiBamSummary >/dev/null 2>&1 || { echo >&2 "I require multiBamSumm
 
 
 ### Input file names via arguments
-while getopts f:l: flag
+while getopts f:l:n: flag
 do
     case "${flag}" in
         f) files=${OPTARG};;
         l) labels=${OPTARG};;
+        n) name=${OPTARG};; 
     esac
 done
 
@@ -38,3 +39,7 @@ inlabels=`cat $labels | tr '\n' ' '`
 echo $inlabels
 
 # cat ids.txt | parallel echo cutadapt -l 20 {}_1.fastq -o {}_1.trimmed.fq
+
+
+#### Run multiBamSummary
+echo multiBamSummary bins --bamfiles $infiles --labels $inlabels --extendReads --ignoreDuplicates --samFlagInclude 2 --maxFragmentLength 500 -o ${name}_summary.npz
