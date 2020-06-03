@@ -28,14 +28,14 @@ do
     esac
 done
 
-infiles=`cat $files | tr '\n' ' '`
+infiles=$(cat $files | tr '\n' ' ')
 echo $infiles
 
 
 #### Read in a file of input file labels
 # short descriptive name of sample to be used with '--labels' flag
 
-inlabels=`cat $labels | tr '\n' ' '`
+inlabels=$(cat $labels | tr '\n' ' ')
 echo $inlabels
 
 # cat ids.txt | parallel echo cutadapt -l 20 {}_1.fastq -o {}_1.trimmed.fq
