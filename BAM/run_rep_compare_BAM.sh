@@ -17,13 +17,24 @@ command -v multiBamSummary >/dev/null 2>&1 || { echo >&2 "I require multiBamSumm
 # cat BAM_files.txt separate by spaces
 # https://www.linuxquestions.org/questions/linux-newbie-8/want-to-list-output-in-single-line-space-separated-860016/
 
-infiles=`cat BAM_files.txt | tr '\n' ' '`
+
+### Input file names via arguments
+while getopts f:l: flag
+do
+    case "${flag}" in
+        f) files=${OPTARG};;
+        l) labels=${OPTARG};;
+    esac
+done
+
+infiles=`cat $files | tr '\n' ' '`
 echo $infiles
+
 
 #### Read in a file of input file labels
 # short descriptive name of sample to be used with '--labels' flag
 
-inlabels=`cat BAM_labels.txt | tr '\n' ' '`
+inlabels=`cat $labels | tr '\n' ' '`
 echo $inlabels
 
 # cat ids.txt | parallel echo cutadapt -l 20 {}_1.fastq -o {}_1.trimmed.fq
