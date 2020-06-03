@@ -11,17 +11,19 @@
 command -v multiBamSummary >/dev/null 2>&1 || { echo >&2 "I require multiBamSummary but it's not installed.  Aborting."; exit 1; }
 
 
-#### Read in a file of input file names
+### Read in a file of input file names
 # contents of BAM_files.txt to be used with '--bamfiles' flag
 # preferably short_descriptive names
 # cat BAM_files.txt separate by spaces
 # https://www.linuxquestions.org/questions/linux-newbie-8/want-to-list-output-in-single-line-space-separated-860016/
 
-cat BAM_files.txt | tr '\n' ' '
+infiles=`cat BAM_files.txt | tr '\n' ' '`
+echo $infiles
 
 #### Read in a file of input file labels
 # short descriptive name of sample to be used with '--labels' flag
 
-cat BAM_labels.txt | tr '\n' ' '
+inlabels=`cat BAM_labels.txt | tr '\n' ' '`
+echo $inlabels
 
 # cat ids.txt | parallel echo cutadapt -l 20 {}_1.fastq -o {}_1.trimmed.fq
