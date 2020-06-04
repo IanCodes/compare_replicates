@@ -65,6 +65,8 @@ echo --- Running Fingerprint ---
 echo plotFingerprint --numberOfProcessors "max/2" --bamfiles $infiles --labels $inlabels --extendReads --ignoreDuplicates --samFlagInclude 2 --maxFragmentLength 500 -o ${name}_fingerprint.png --plotTitle="Fingerprint of Read Counts" --plotFileFormat="png"
 echo ""
 
+$(plotFingerprint --numberOfProcessors "max/2" --bamfiles $infiles --labels $inlabels --extendReads --ignoreDuplicates --samFlagInclude 2 --maxFragmentLength 500 -o ${name}_fingerprint.png --plotTitle="Fingerprint of Read Counts" --plotFileFormat="png")
+
 echo "Finished!"
 
 
