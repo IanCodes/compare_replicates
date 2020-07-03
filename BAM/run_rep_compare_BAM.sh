@@ -19,12 +19,26 @@ command -v multiBamSummary >/dev/null 2>&1 || { echo >&2 "I require multiBamSumm
 
 
 ### Input file names via arguments
-while getopts f:l:n: flag
+usage="$(basename "$0") [-h] [-f text] [-l text] [-n text] -- Program to compare BAM files.
+Requires Deeptools to be installed, e.g. via active conda environment.
+
+where:
+        -h  show this help text
+        -f  BAM files - one per line (requires .bai indexes)
+        -l  short label corresponding to BAM file (in same order) - one per line
+        -n  prefix for output files
+
+"
+
+
+while getopts f:l:n:h flag
 do
     case "${flag}" in
         f) files=${OPTARG};;
         l) labels=${OPTARG};;
         n) name=${OPTARG};; 
+        h) echo "$usage"
+           exit;;
     esac
 done
 
